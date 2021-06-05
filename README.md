@@ -1,12 +1,6 @@
-# Linuxbrew Core
-Core formulae for the Homebrew package manager.
-
-[Homebrew/discussions (forum)](https://github.com/homebrew/discussions/discussions)
+# Pibrew Core
+`homebrew/core` for the Raspberry Pi family. I'm currently targeting 64-bit (aarch64), but will also be looking at 32-bit (armhf) builds.
 
 ## How do I install these formulae?
 
-Just `brew install <formula>`. This is the default tap for Homebrew and is installed by default.
-
-## More Documentation, Troubleshooting, Contributing, Security, Community, Donations, License and Sponsors
-
-See these sections in [Homebrew/brew's README](https://github.com/Homebrew/brew#homebrew).
+You don't, at least not yet.
