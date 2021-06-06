@@ -35,7 +35,8 @@ class Gmp < Formula
     end
 
     on_linux do
-      args << "--build=core2-linux-gnu"
+      cpu = Hardware::CPU.arm? ? "aarch64" : "core2"
+      args << "--build=#{cpu}-linux-gnu"
       args << "ABI=32" if Hardware::CPU.is_32_bit?
     end
 
