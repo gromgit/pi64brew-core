@@ -35,9 +35,21 @@ class Go < Formula
     end
 
     on_linux do
-      url "https://storage.googleapis.com/golang/go1.16.linux-amd64.tar.gz"
-      version "1.16"
-      sha256 "013a489ebb3e24ef3d915abe5b94c3286c070dfe0818d5bca8108f1d6e8440d2"
+      if Hardware::CPU.arm?
+        if Hardware::CPU.is_32_bit?
+          url "https://storage.googleapis.com/golang/go1.16.linux-armv6l.tar.gz"
+          version "1.16"
+          sha256 "d1d9404b1dbd77afa2bdc70934e10fbfcf7d785c372efc29462bb7d83d0a32fd"
+        else
+          url "https://storage.googleapis.com/golang/go1.16.linux-arm64.tar.gz"
+          version "1.16"
+          sha256 "3770f7eb22d05e25fbee8fb53c2a4e897da043eb83c69b9a14f8d98562cd8098"
+        end
+      else
+        url "https://storage.googleapis.com/golang/go1.16.linux-amd64.tar.gz"
+        version "1.16"
+        sha256 "013a489ebb3e24ef3d915abe5b94c3286c070dfe0818d5bca8108f1d6e8440d2"
+      end
     end
   end
 
