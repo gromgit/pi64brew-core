@@ -68,7 +68,8 @@ class Go < Formula
     libexec.install Dir["*"]
     bin.install_symlink Dir[libexec/"bin/go*"]
 
-    system bin/"go", "install", "-race", "std"
+    install_args = Hardware::CPU.is_32_bit? ? %w[std] : %w[-race std]
+    system bin/"go", "install", *install_args
 
     # Remove useless files.
     # Breaks patchelf because folder contains weird debug/test files
