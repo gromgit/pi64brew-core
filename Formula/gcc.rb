@@ -3,7 +3,7 @@ require "os/linux/glibc"
 class Gcc < Formula
   desc "GNU compiler collection"
   homepage "https://gcc.gnu.org/"
-  if Hardware::CPU.arm?
+  if OS.mac? && Hardware::CPU.arm?
     # Branch from the Darwin maintainer of GCC with Apple Silicon support,
     # located at https://github.com/iains/gcc-darwin-arm64 and
     # backported with his help to gcc-11 branch. Too big for a patch.
