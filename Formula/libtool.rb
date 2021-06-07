@@ -17,6 +17,11 @@ class Libtool < Formula
 
   depends_on "m4"
 
+  # Dunno why `libtool` insists on rebuilding docs on ARM build
+  on_linux do
+    depends_on "texinfo" if Hardware::CPU.arm?
+  end
+
   # Fixes the build on macOS 11:
   # https://lists.gnu.org/archive/html/libtool-patches/2020-06/msg00001.html
   patch :p0 do
