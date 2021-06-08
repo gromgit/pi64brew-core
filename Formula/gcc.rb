@@ -127,6 +127,15 @@ class Gcc < Formula
       # Fix Linux error: gnu/stubs-32.h: No such file or directory.
       args << "--disable-multilib"
 
+      # Need to force build target for ARM 32-bit
+      # http://simostro.synology.me/simone/2018/02/09/how-to-build-install-gcc-g-from-sources-on-a-raspberry-pi/
+      args += %w[
+        --build=arm-linux-gnueabihf
+        --with-arch=armv8-a
+        --with-fpu=vfp
+        --with-float=hard
+      ] if Hardware::CPU.arm? && Hardware::CPU.is_32_bit?
+
       # Change the default directory name for 64-bit libraries to `lib`
       # https://stackoverflow.com/a/54038769
       inreplace "gcc/config/i386/t-linux64", "m64=../lib64", "m64="
