@@ -17,6 +17,12 @@ class Libunistring < Formula
     sha256 cellar: :any, x86_64_linux:  "c3abe7fa8b2fb314e2bbbe003e9db550148e95a2816e3c95e30199178bfe578b"
   end
 
+  on_linux do
+    # https://savannah.gnu.org/bugs/?56053
+    # revisit this on next release
+    patch :DATA
+  end
+
   def install
     system "./configure", "--disable-dependency-tracking",
                           "--disable-silent-rules",
@@ -46,3 +52,17 @@ class Libunistring < Formula
     assert_equal "🍺", shell_output("./test").chomp
   end
 end
+__END__
+diff --git a/tests/glthread/thread.h b/tests/glthread/thread.h
+index ca40508..1d2a544 100644
+--- a/tests/glthread/thread.h
++++ b/tests/glthread/thread.h
+@@ -133,8 +133,6 @@ extern int glthread_in_use (void);
+    call to foo(...) in the same function.  To avoid this, we test the
+    address of a function in libpthread that we don't use.  */
+ 
+-#  pragma weak pthread_create
+-
+ #  ifndef pthread_sigmask /* Do not declare rpl_pthread_sigmask weak.  */
+ #   pragma weak pthread_sigmask
+ #  endif
