@@ -46,8 +46,18 @@ class Ghc < Formula
     end
 
     on_linux do
-      url "https://downloads.haskell.org/~ghc/8.10.4/ghc-8.10.4-x86_64-deb9-linux.tar.xz"
-      sha256 "5694200a5c38f22c142baf850b1d2f3784211d2ec9302e11693259a1ae8e38b7"
+      if Hardware::CPU.arm?
+        if Hardware::CPU.is_32_bit?
+          url "https://downloads.haskell.org/~ghc/8.10.4/ghc-8.10.4-armv7-deb10-linux.tar.xz"
+          sha256 "0d18ef83593272f6196a41cc3abdc48dfe5e14372db75d71ea19fe35320c4e81"
+        else
+          url "https://downloads.haskell.org/~ghc/8.10.4/ghc-8.10.4-aarch64-deb10-linux.tar.xz"
+          sha256 "249da6310be799a5eefe0579b6dae1701eb984afb980fe08309d19cf704038ed"
+        end
+      else
+        url "https://downloads.haskell.org/~ghc/8.10.4/ghc-8.10.4-x86_64-deb9-linux.tar.xz"
+        sha256 "5694200a5c38f22c142baf850b1d2f3784211d2ec9302e11693259a1ae8e38b7"
+      end
     end
   end
 
@@ -66,7 +76,12 @@ class Ghc < Formula
       args = if OS.mac?
         "--build=#{Hardware.oldest_cpu}-apple-darwin#{OS.kernel_version.major}"
       else
-        "--build=core2-linux-gnu"
+        cpu = if Hardware::CPU.arm?
+          Hardware::CPU.is_32_bit? ? "armv6" : "aarch64"
+        else
+          "core2"
+        end
+        "--build=#{cpu}-linux-gnu"
       end
       system "./configure", "--prefix=#{gmp}", "--with-pic", "--disable-shared",
                             *args
